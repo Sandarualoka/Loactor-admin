@@ -1,16 +1,6 @@
-
-
 import React from 'react'
-import Home from './pages/home/Home'
-// import Single from "./pages/single/Single";
-// import New from "./pages/new/New";
-// import List from "./pages/list/List";
-// import { userInputs } from './formSource';
-// import { productInputs } from './formSource';
-import Video from './pages/video/Video';
 import Login from './pages/login/Login';
 import New from './pages/new/New';
-
 import {
   BrowserRouter,
   Route,
@@ -48,8 +38,8 @@ function App() {
            {/* <Route path='/' element={<Login/>} />  */}
           
            <Route path='/' element={<Login/>} />
-           <Route path='/video' element={<Video/>} />
-           <Route path='/home' element={<Home/>}/>
+           
+           
            <Route path='/new' element={<New/>} />
          </Routes>
       </BrowserRouter>
