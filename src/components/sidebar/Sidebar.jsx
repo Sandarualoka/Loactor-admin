@@ -30,10 +30,17 @@ const Sidebar = () => {
             <ul>
             <p className='title'>OPTIONS</p>
     
-                <Link to="/NEW" style={{textDecoration : "none"}}>
+                <Link to="/new" style={{textDecoration : "none"}}>
                     <li>
                         <PersonIcon className="icon"/>
                         <span >Add New Employee</span>
+                    </li>
+                </Link>
+
+                <Link to="/view" style={{textDecoration : "none"}}>
+                    <li>
+                        <PersonIcon className="icon"/>
+                        <span >View Employees</span>
                     </li>
                 </Link>
 

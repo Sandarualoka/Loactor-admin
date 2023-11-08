@@ -1,6 +1,8 @@
 import React from 'react'
 import Login from './pages/login/Login';
 import New from './pages/new/New';
+import View from './pages/view/View';
+
 import {
   BrowserRouter,
   Route,
@@ -35,14 +37,11 @@ function App() {
         </Routes> */}
 
          <Routes>
-           {/* <Route path='/' element={<Login/>} />  */}
+          
           
            <Route path='/' element={<Login/>} />
-
-           
-           
-           
            <Route path='/new' element={<New/>} />
+           <Route path='/view' element={<View/>}/>
          </Routes>
       </BrowserRouter>
     </div>
