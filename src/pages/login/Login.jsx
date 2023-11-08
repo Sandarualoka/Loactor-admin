@@ -4,6 +4,7 @@ import KeyIcon from '@mui/icons-material/Key';
 import './login.css';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+
 const Login = () => {
   const navigate = useNavigate();
   const [isShaking, setShaking] = useState(false);
@@ -55,3 +56,4 @@ const Login = () => {
 };
 
 export default Login;
+
