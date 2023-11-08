@@ -2,37 +2,31 @@ import React from 'react';
 import PersonIcon from '@mui/icons-material/Person';
 import KeyIcon from '@mui/icons-material/Key';
 import './login.css';
-import { Link } from 'react-router-dom';
-
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 const Login = () => {
+  const navigate = useNavigate();
+  const [isShaking, setShaking] = useState(false);
+
   const handleLogin = async () => {
     const email = document.querySelector('.login-input-em').value;
     const password = document.querySelector('.login-input-pw').value;
 
-    try {
-      const response = await fetch('https://example.com/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (response.ok) {
-        console.log('Login successful!');
-        // Handle success - you can redirect or perform actions upon successful login.
-      } else {
-        console.error('Login failed');
-        // Handle login failure here.
-      }
-    } catch (error) {
-      console.error('Error:', error);
-      // Handle other errors (like network issues) here.
+    if (email === 'sandarualoka@gmail.com' && password === '12345') {
+      // Redirect upon successful login
+      navigate('/new'); // Replace '/new' with your actual new route
+    } else {
+      console.error('Login failed');
+      // Handle login failure here.
+      setShaking(true); 
+      setTimeout(() => {
+        setShaking(false);
+      }, 600);
     }
   };
 
   return (
-    <div className="login-container" onClick={onclick}>
+    <div className="login-container">
       <div className="login-top"></div>
       <div className="login-bottom"></div>
       <div className="login-center">
@@ -43,23 +37,18 @@ const Login = () => {
         />
         <h2 className='login-heading'>LOGIN</h2>
         <div className="login-usere">
-          <PersonIcon />
+          <PersonIcon className='input-icon' />
           <input type="email" placeholder="Enter your Email" className='login-input-em' />
         </div>
         <div className="login-userp">
-          <KeyIcon />
-          <input type="password" placeholder="Enter Your Name" className='login-input-pw' />
+          <KeyIcon className='input-icon' />
+          <input type="password" placeholder="Enter Your Password" className='login-input-pw' />
         </div>
-
-        
         <div className="login-submit-container">
-          <div className="login-submit" onClick={handleLogin}>
+          <div className={`login-submit ${isShaking ? 'shake' : ''}`} onClick={handleLogin}>
             Login
           </div>
         </div>
-        
-
-        <h2>&nbsp;</h2>
       </div>
     </div>
   );
