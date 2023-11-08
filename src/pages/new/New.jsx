@@ -65,7 +65,11 @@ const New = () => {
                 <input type="file" id="fileInput" accept=".csv" />
               </div>
             </div>
-            <button type="submit">Submit</button>
+            {/* <button type="submit">Submit</button> */}
+
+            <div class="wrap">
+                <button class="button">Submit</button>
+            </div>
             
           </form>
         </div>

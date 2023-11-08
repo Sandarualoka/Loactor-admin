@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 
+
 const Sidebar = () => {
 
     
@@ -49,6 +50,8 @@ const Sidebar = () => {
                 <li onClick={handleLogout}>
                     <LogoutIcon className="icon" />
                     <span>Logout</span>
+
+                    
                 </li>
 
 
