@@ -48,9 +48,10 @@ const Bulk = () => {
       <div className="button-container">
         <input className='browseBtn' type="file" accept=".csv" onChange={handleFileChange} />
         
-        <button className="submit-button" onClick={handleSubmit}>
-          Submit
-        </button>
+        
+            <div class="wrap1">
+                <button class="button" onClick={handleSubmit}>Submit</button>
+            </div>
       </div>
     </div>
   </div>
