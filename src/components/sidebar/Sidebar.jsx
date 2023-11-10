@@ -31,7 +31,7 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to="/new" style={{textDecoration: "none"}}>
+          <Link to="/bulk" style={{textDecoration: "none"}}>
             <li>
               <GroupAddIcon className="icon" />
               <span >Add Bulk Employees</span>

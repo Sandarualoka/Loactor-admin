@@ -11,6 +11,37 @@
             font-size: 40px;
             margin-top: 20px;
         }
+        img{
+            width: 250px;
+            height: 250px;
+        }
+        
+        .center-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+          }
+          
+          .button-container {
+            display: flex;
+            gap: 10px; /* Adjust the gap between buttons */
+          }
+
+          .browseBtn{
+            margin-top: 30px;
+          }
+          
+          
+          .submit-button {
+            margin-top: 30px;
+            padding: 10px 20px; /* Adjust padding to increase button size */
+            background-color: #7451f8;
+            border: none;
+            border-radius: 10px;
+          }
+          
     }
 
 }
