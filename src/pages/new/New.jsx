@@ -20,7 +20,7 @@ const New = () => {
 
     console.log("Employee ID:", employeeId);
     console.log("Employee Password:", employeePassword);
-    console.log("Uploaded file:", document.getElementById('fileInput').files[0]);
+    // console.log("Uploaded file:", document.getElementById('fileInput').files[0]);
   };
 
   return (
@@ -60,12 +60,8 @@ const New = () => {
                 required
               />
             </div>
-            <div className="form-group">
-              <div className="fileInput">
-                <input type="file" id="fileInput" accept=".csv" />
-              </div>
-            </div>
-            {/* <button type="submit">Submit</button> */}
+
+           
 
             <div class="wrap">
                 <button class="button">Submit</button>

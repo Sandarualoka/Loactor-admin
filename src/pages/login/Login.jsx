@@ -73,7 +73,7 @@ const Login = () => {
     const email = document.querySelector('.login-input-em').value;
     const password = document.querySelector('.login-input-pw').value;
 
-    if (email === 'sandarualoka@gmail.com' && password === '12345') {
+    if (email === 'sandaru@gmail.com' && password === '12345') {
       navigate('/new');
     } else {
       setError(true);

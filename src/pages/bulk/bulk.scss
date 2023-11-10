@@ -1,0 +1,16 @@
+.bulk{
+    display: flex;
+    width: 100%;
+
+    .bulkContainer{
+        flex: 6;
+
+        .bulkHeader{
+            color: #7451f8;
+            text-align: center;
+            font-size: 40px;
+            margin-top: 20px;
+        }
+    }
+
+}
