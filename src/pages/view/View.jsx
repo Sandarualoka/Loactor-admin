@@ -11,6 +11,7 @@ const AdminPanel = () => {
   const [employeeData, setEmployeeData] = useState([]);
 
   const fetchEmployeeData = async () => {
+
     try {
       const response = await fetch('YOUR_BACKEND_API_ENDPOINT'); // Replace with your backend API endpoint
       if (response.ok) {
@@ -42,7 +43,10 @@ const AdminPanel = () => {
     <div className="view">
       <Sidebar />
       <div className="viewContainer">
-        <img src='https://img.freepik.com/free-vector/people-working-as-team-background-flat-style_23-2147768163.jpg?size=338&ext=jpg&ga=GA1.1.1880011253.1699142400&semt=ais' alt='teamLogo'/>
+      <div className="viewImg">
+      <img  className="logoEmployeeGrp" src='https://img.freepik.com/free-vector/people-working-as-team-background-flat-style_23-2147768163.jpg?size=338&ext=jpg&ga=GA1.1.1880011253.1699142400&semt=ais' alt='teamLogo'/>
+
+      </div>
         <Table>
           <TableHead className='tHead'>
             <TableRow>

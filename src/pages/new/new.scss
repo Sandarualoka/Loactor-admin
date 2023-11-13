@@ -7,6 +7,7 @@ $secondary-color: #2ecc71;
 
     .newContainer{
         flex: 6;
+        
     }
 
     .user-form {
@@ -75,20 +76,19 @@ $secondary-color: #2ecc71;
         }
       }
 
+      .newEmployeeGrp{
+        width: 250px;
+        height: 250px;
+        margin-left: 30%;
+        animation: bounce 1s infinite alternate;
+      }
       @keyframes bounce {
         0% {
           transform: translateY(0);
         }
-        50% {
-          transform: translateY(-20px); /* Adjust this value to control the bounce height */
-        }
         100% {
-          transform: translateY(0);
+          transform: translateY(-10px);
         }
-      }
-      
-      .bouncingImage {
-        animation: bounce 1s infinite; /* Adjust animation duration as needed */
       }
 
       html, body {

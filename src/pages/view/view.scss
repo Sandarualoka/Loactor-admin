@@ -4,8 +4,25 @@
 
     .viewContainer{
         flex: 6;
-        padding: 30px;
         
+        
+        .viewImg{
+            margin-left: 40%;
+        }
+
+/* bounce.css */
+.logoEmployeeGrp {
+    animation: bounce 1s infinite alternate;
+  }
+  
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }
 
         .teamLogo{
             width: 200px;
