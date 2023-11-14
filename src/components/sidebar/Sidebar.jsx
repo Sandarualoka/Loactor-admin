@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 import PersonIcon from '@mui/icons-material/Person';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
-
+import FilterAltIcon from '@mui/icons-material/FilterAlt';
 
 const Sidebar = () => {
   const handleLogout = () => {
@@ -42,6 +42,13 @@ const Sidebar = () => {
             <li>
               <FormatListNumberedIcon className="icon" />
               <span >View Employees</span>
+            </li>
+          </Link>
+
+          <Link to="/viewDetails" style={{textDecoration: "none"}}>
+            <li>
+              <FilterAltIcon className="icon" />
+              <span >View Employee Details</span>
             </li>
           </Link>
 

@@ -67,7 +67,7 @@
 
 import React, { useState } from 'react';
 import Sidebar from '../../components/sidebar/Sidebar';
-import axios from 'axios';
+
 import Papa from 'papaparse';
 import './bulk.scss';
 

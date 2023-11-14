@@ -3,6 +3,7 @@ import Login from './pages/login/Login';
 import New from './pages/new/New';
 import View from './pages/view/View';
 import Bulk from './pages/bulk/Bulk';
+import ViewDetails from './pages/viewDetails/ViewDetails';
 
 import {
   BrowserRouter,
@@ -22,6 +23,8 @@ function App() {
            <Route path='/new' element={<New/>} />
            <Route path='/view' element={<View/>}/>
            <Route path='/bulk' element={<Bulk/>} />
+           <Route path='/viewDetails' element={<ViewDetails/>} />
+
          </Routes>
       </BrowserRouter>
     </div>

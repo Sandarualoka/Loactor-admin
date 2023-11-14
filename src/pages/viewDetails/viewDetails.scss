@@ -1,0 +1,29 @@
+.viewDetails{
+    display: flex;
+    width: 100%;
+    padding: 5px;
+
+
+    .viewDetailsContainer{
+        flex: 6;
+
+        .viewDetailsImg{
+        margin-left: 40%;
+        margin-top: 15px;
+
+        img{
+            width: 300px;
+            height: 250px;
+        }
+        }
+
+        @keyframes bounce {
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(-10px);
+            }
+          }
+    }
+}
