@@ -168,28 +168,28 @@ const Sidebar = () => {
           <Link to="/new" style={{textDecoration: "none"}}>
             <li style={{ color: 'white' }}>
               <PersonIcon className="icon" style={{ color: 'white' }}/>
-              <span style={{ color: 'white' }}>Add New Employee</span>
+              <span style={{ color: 'white' , marginBottom:'10px' }}>Add New Employee</span>
             </li>
           </Link>
 
           <Link to="/bulk" style={{textDecoration: "none"}}>
             <li style={{ color: 'white' }}>
               <GroupAddIcon className="icon" style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>Add Bulk Employees</span>
+              <span style={{ color: 'white' , marginBottom:'10px'}}>Add Bulk Employees</span>
             </li>
           </Link>
 
           <Link to="/view" style={{textDecoration: "none"}}>
-            <li style={{ color: 'white' }}>
+            <li style={{ color: 'white'   }}>
               <FormatListNumberedIcon className="icon" style={{ color: 'white' }}/>
-              <span style={{ color: 'white' }}>View Employees</span>
+              <span style={{ color: 'white' , marginBottom:'10px'}}>View Employees</span>
             </li>
           </Link>
 
           <Link to="/viewDetails" style={{textDecoration: "none"}}>
             <li >
               <FilterAltIcon className="icon" style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>View Employee Details</span>
+              <span style={{ color: 'white' , marginBottom:'10px' }}>View Employee Details</span>
             </li>
           </Link>
 
@@ -197,7 +197,7 @@ const Sidebar = () => {
           <li>
             <Link to="/" onClick={handleLogout} style={{textDecoration: "none", color: 'white' }}>
               <LogoutIcon className="icon" style={{ color: 'white' }} />
-              <span style={{ color: 'white' }}>Logout</span>
+              <span style={{ color: 'white' ,marginBottom:'10px' }}>Logout</span>
             </Link>
           </li>
         </ul>
