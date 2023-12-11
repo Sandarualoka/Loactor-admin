@@ -7,13 +7,27 @@ import {
   TableRow,
   TableCell,
   TablePagination,
+  Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  TextField,
+  DialogActions,
 } from "@mui/material";
 import "./view.scss";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { format } from "date-fns";
 const AdminPanel = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [employeeData, setEmployeeData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+
   const fetchEmployeeData = async () => {
     const token = localStorage.getItem("accessToken");
     try {
@@ -48,9 +62,61 @@ const AdminPanel = () => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
+  const handleUpdateClick = (employee) => {
+    setSelectedEmployee(employee);
+    setOpenDialog(true);
+  };
+  const handleDialogClose = () => {
+    setOpenDialog(false);
+    setSelectedEmployee(null);
+    setNewPassword("");
+  };
+  const handlePasswordChange = (event) => {
+    setNewPassword(event.target.value);
+  };
+
+  const handleDialogSubmit = () => {
+    // Call the reset-password API with the selectedEmployee.employeeid and newPassword
+    const token = localStorage.getItem("accessToken");
+    const apiUrl =
+      "https://backattendance.tfdatamaster.com/api/users/reset-password";
+
+    fetch(apiUrl, {
+      method: "PUT",
+      headers: {
+        "auth-token": `${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        employeeid: selectedEmployee.employeeid,
+        newPassword: newPassword,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Reset Password Response:", data);
+        handleDialogClose(); // Close the dialog after submission
+        // You may want to handle success and error cases appropriately
+        if (data.message === "Password reset successful") {
+          // Show success message
+          toast.success("Password updated successfully");
+        } else {
+          // Show error message
+          toast.error("Failed to update password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error resetting password:", error);
+        // Handle the error
+        toast.error("An error occurred");
+      });
+  };
   return (
     <div className="view">
-      <Sidebar />
+      <div className="sticky">
+        <Sidebar />
+      </div>
+
       <div className="viewContainer">
         <div className="viewImg">
           <img
@@ -59,21 +125,46 @@ const AdminPanel = () => {
             alt="teamLogo"
           />
         </div>
-        <Table>
+
+        <TextField
+          style={{ marginLeft: "27px" }}
+          label="Search by Employee ID"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+
+        <Table className="tableView">
           <TableHead className="tHead">
             <TableRow>
-              <TableCell>Employee ID</TableCell>
-              <TableCell>Date</TableCell>
+              <TableCell style={{ color: "white", fontSize: "20px" }}>
+                Employee ID
+              </TableCell>
+              <TableCell style={{ color: "white", fontSize: "20px" }}>
+                Date
+              </TableCell>
+              <TableCell style={{ color: "white", fontSize: "20px" }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {employeeData
+              .filter((employee) =>
+                employee.employeeid
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              )
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((employee) => (
                 <TableRow key={employee.id}>
                   <TableCell>{employee.employeeid}</TableCell>
                   <TableCell>
                     {format(new Date(employee.date), "yyyy-MM-dd HH:mm:ss")}
+                  </TableCell>
+                  <TableCell>
+                    <Button onClick={() => handleUpdateClick(employee)}>
+                      Update
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -88,6 +179,24 @@ const AdminPanel = () => {
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
         />
+        {/* Update Password Dialog */}
+        <Dialog open={openDialog} onClose={handleDialogClose}>
+          <DialogTitle>Update Password</DialogTitle>
+          <DialogContent>
+            <p>Employee ID: {selectedEmployee?.employeeid}</p>
+            <TextField
+              label="New Password"
+              type="password"
+              value={newPassword}
+              onChange={handlePasswordChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleDialogClose}>Cancel</Button>
+            <Button onClick={handleDialogSubmit}>Submit</Button>
+          </DialogActions>
+        </Dialog>
+        <ToastContainer />
       </div>
     </div>
   );

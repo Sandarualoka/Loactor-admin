@@ -2,14 +2,36 @@
     display: flex;
     width: 100%;
 
+   
+
     .viewContainer{
-        flex: 6;
+        flex: 4;
+        margin-left: 250px;
         
         
         .viewImg{
             margin-left: 40%;
         }
 
+
+        .view {
+          display: flex;
+        }
+        
+      
+        
+        .viewContainer {
+          margin-left: 200px; /* Set the width of the Sidebar */
+          flex-grow: 1;
+          overflow-y: auto; /* Enable vertical scrolling for the container */
+        }
+
+        .sticky {
+          position: fixed;
+        }
+        
+        /* Add your existing styles for other elements in viewContainer here */
+        
 /* bounce.css */
 .logoEmployeeGrp {
     animation: bounce 1s infinite alternate;
@@ -33,9 +55,14 @@
         }
 
         .tHead{
-            background-color:#7551f86b;
+            background-color:black;
+            color: white;
         }
-
+.tableView{
+  margin-top: 20px;
+  margin-left: 30px;
+  margin-right: 70px;
+}
         
     }
 }

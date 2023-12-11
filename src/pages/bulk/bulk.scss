@@ -8,7 +8,7 @@
         flex: 6;
 
         .bulkHeader{
-            color: #7451f8;
+            color: rgba(53, 15, 245, 0.985);
             text-align: center;
             font-size: 40px;
             margin-top: 20px;
@@ -24,6 +24,8 @@
             align-items: center;
             justify-content: center;
             text-align: center;
+            margin-top: 50px;
+            margin-left: 150px;
 
             .logoEmployee {
                 animation: bounce 1s infinite alternate;
@@ -62,11 +64,8 @@
                 letter-spacing: 1.3px;
                 font-weight: 700;
                 color: white;
-                background: #6439ff;
-                // background: linear-gradient(90deg, #6439ffc8 0%, #6439ff68);
+                background: black;
                 border: none;
-                // border-radius: 1000px;
-                // box-shadow: 12px 12px 24px #6439ffb6;
                 transition: all 0.3s ease-in-out 0s;
                 cursor: pointer;
                 outline: none;
@@ -92,6 +91,7 @@
               
               .button:hover, .button:focus {
                 // color: #313133;
+                background-color: rgba(53, 15, 245, 0.985);
                 transform: translateY(-6px);
               }
               
@@ -103,7 +103,7 @@
                 content: '';
                 width: 30px; height: 30px;
                 border-radius: 100%;
-                border: 6px solid #6439ffc5;
+                border: 6px solid rgba(53, 15, 245, 0.985);
                 position: absolute;
                 z-index: -1;
                 top: 50%;
@@ -140,7 +140,7 @@
           .submit-button {
             margin-top: 30px;
             padding: 10px 20px; /* Adjust padding to increase button size */
-            background-color: #7451f8;
+            background-color: rgba(53, 15, 245, 0.985);
             border: none;
             border-radius: 10px;
           }
@@ -148,3 +148,4 @@
     }
 
 }
+

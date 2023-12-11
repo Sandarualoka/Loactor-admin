@@ -2,11 +2,15 @@
     display: flex;
     width: 100%;
     
-    margin: 0;
+    .sticky{
+      position: fixed;
+    }
 
 
     .viewDetailsContainer{
-        flex: 6;
+        margin-left: 250px;
+        flex-grow: 1;
+        overflow-y: auto;
 
         .viewDetailsImg{
         margin-left: 40%;
@@ -40,6 +44,46 @@
         .bounceEffect {
           animation: bounce 2s infinite;
         }
+
+        .pdfButton {
+  background-color: #ff0000; /* Green background color */
+  color: white; /* White text color */
+  border: none; /* Remove border */
+  padding: 10px 20px; /* Add some padding */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px; /* Add some border-radius for a rounded look */
+  margin-left: 20px;
+  transition: background-color 0.3s ease-out, transform 0.5s ease-out;
+}
+
+.pdfButton:hover {
+  background-color: rgba(53, 15, 245, 0.985); /* Darker green on hover */
+}
+
+.csvButton {
+  background-color: #31cf37;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-out, transform 0.5s ease-out;
+}
+
+.csvButton:hover {
+  background-color: rgba(53, 15, 245, 0.985); /* Change the background color on hover */
+  
+}
+
         
     }
 }
