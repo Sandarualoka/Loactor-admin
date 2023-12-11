@@ -102,7 +102,17 @@ const Bulk = () => {
               type="file"
               accept=".csv"
               onChange={handleFileChange}
+              style={{
+                // Add your styles here
+                padding: "10px",
+                backgroundColor: "rgba(53, 15, 245, 0.985)",
+                color: "#fff",
+                borderRadius: "5px",
+                cursor: "pointer",
+                marginTop: "10px",
+              }}
             />
+
             <div className="wrap1">
               <button className="button" onClick={handleFileSubmit}>
                 Submit
