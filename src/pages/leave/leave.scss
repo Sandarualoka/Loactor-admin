@@ -1,0 +1,47 @@
+.leave{
+    display: flex;
+    width: 100%;
+    margin: 0;
+    
+
+    .leaveContainer{
+        flex: 6;
+
+    .leave-content{
+
+text-align: center;
+    }
+
+    img{
+        margin-top: 30px;
+        margin-left: 30px;
+        width: 350px;
+        height: 250px;
+        
+    }
+
+    .leave-table{
+        padding-left: 300px;
+        padding-right: 50px;
+
+        .leave-table-head{
+            background-color: black;
+        }
+    }
+
+    .leave-logo{
+        animation: bounce 1s infinite alternate;
+      }
+      
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
+      }
+
+    
+    }
+}
