@@ -1,0 +1,36 @@
+
+
+    .req_leave{
+        display: flex;
+        width: 100%;
+        margin: 0;
+        
+    
+        .leaveReqContainer{
+            text-align: center;
+    
+            img{
+                width: 350px;
+                height: 350px;
+                margin-left: 650px;
+            }
+    
+            .leaveReq-logo{
+                animation: bounce 1s infinite alternate;
+              }
+              
+              @keyframes bounce {
+                0% {
+                  transform: translateY(0);
+                }
+                100% {
+                  transform: translateY(-10px);
+                }
+              }
+        }
+    }
+
+    .leaveReqTable{
+        padding-left: 300px;
+        padding-right: 80px;
+    }

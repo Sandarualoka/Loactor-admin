@@ -1,4 +1,4 @@
-// import * as React from "react";
+// import React, { useState } from "react";
 // import Paper from "@mui/material/Paper";
 // import Table from "@mui/material/Table";
 // import TableBody from "@mui/material/TableBody";
@@ -7,28 +7,36 @@
 // import TableHead from "@mui/material/TableHead";
 // import TablePagination from "@mui/material/TablePagination";
 // import TableRow from "@mui/material/TableRow";
-// import "./leave_table.scss";
+// import InputBase from "@mui/material/InputBase";
+// import Switch from "@mui/material/Switch";
+// import SearchIcon from "@mui/icons-material/Search";
 
 // const columns = [
 //   { id: "employeeId", label: "Employee ID", minWidth: 170 },
-//   { id: "name", label: "Name", minWidth: 170 },
-//   { id: "annualLeave", label: "Annual Leave", minWidth: 170 },
-//   { id: "shortLeave", label: "Short Leave", minWidth: 170 },
+//   { id: "employeeName", label: "Employee Name", minWidth: 170 },
+//   { id: "date", label: "Date", minWidth: 170 },
+//   {
+//     id: "status",
+//     label: "Status",
+//     minWidth: 170,
+//     align: "center",
+//     format: (value) => (
+//       <Switch
+//         checked={value}
+//         // Handle the switch change here (add a state and update the status accordingly)
+//       />
+//     ),
+//   },
 // ];
 
-// function createData(employeeId, name, annualLeave, shortLeave) {
-//   return { employeeId, name, annualLeave, shortLeave };
+// function createData(employeeId, employeeName, date, status) {
+//   return { employeeId, employeeName, date, status };
 // }
 
-// const rows = [
-//   createData("EMP001", "John Doe", 20, 5),
-//   createData("EMP002", "Jane Smith", 18, 3),
-//   // Add more rows as needed
-// ];
-
 // export default function StickyHeadTable() {
-//   const [page, setPage] = React.useState(0);
-//   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+//   const [page, setPage] = useState(0);
+//   const [rowsPerPage, setRowsPerPage] = useState(10);
+//   const [searchTerm, setSearchTerm] = useState("");
 
 //   const handleChangePage = (event, newPage) => {
 //     setPage(newPage);
@@ -39,8 +47,35 @@
 //     setPage(0);
 //   };
 
+//   const handleSearchChange = (event) => {
+//     setSearchTerm(event.target.value);
+//     setPage(0);
+//   };
+
+//   const rows = [
+//     createData("EMP001", "John Doe", "2023-01-01", true),
+//     createData("EMP002", "Jane Smith", "2023-01-02", false),
+//     // Add more rows as needed
+//   ];
+
+//   const filteredRows = rows.filter(
+//     (row) =>
+//       row.employeeId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       row.employeeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       row.date.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+
 //   return (
 //     <Paper sx={{ width: "100%", overflow: "hidden" }}>
+//       <InputBase
+//         className="search-leave"
+//         placeholder="Search by Employee ID"
+//         value={searchTerm}
+//         onChange={handleSearchChange}
+//         startAdornment={<SearchIcon />}
+//         sx={{ marginBottom: "20px" }}
+//       />
+
 //       <TableContainer sx={{ maxHeight: 440 }}>
 //         <Table stickyHeader aria-label="sticky table">
 //           <TableHead>
@@ -48,7 +83,7 @@
 //               {columns.map((column) => (
 //                 <TableCell
 //                   key={column.id}
-//                   align="center" // Adjust alignment as needed
+//                   align={column.align || "left"}
 //                   style={{
 //                     minWidth: column.minWidth,
 //                     backgroundColor: "black",
@@ -61,7 +96,7 @@
 //             </TableRow>
 //           </TableHead>
 //           <TableBody>
-//             {rows
+//             {filteredRows
 //               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 //               .map((row) => {
 //                 return (
@@ -74,8 +109,13 @@
 //                     {columns.map((column) => {
 //                       const value = row[column.id];
 //                       return (
-//                         <TableCell key={column.id} align="center">
-//                           {value}
+//                         <TableCell
+//                           key={column.id}
+//                           align={column.align || "left"}
+//                         >
+//                           {column.format && typeof value === "boolean"
+//                             ? column.format(value)
+//                             : value}
 //                         </TableCell>
 //                       );
 //                     })}
@@ -88,7 +128,7 @@
 //       <TablePagination
 //         rowsPerPageOptions={[10, 25, 100]}
 //         component="div"
-//         count={rows.length}
+//         count={filteredRows.length}
 //         rowsPerPage={rowsPerPage}
 //         page={page}
 //         onPageChange={handleChangePage}
@@ -97,7 +137,6 @@
 //     </Paper>
 //   );
 // }
-
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -108,24 +147,37 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import InputBase from "@mui/material/InputBase";
+import Switch from "@mui/material/Switch";
 import SearchIcon from "@mui/icons-material/Search";
-import "./leave_table.scss";
 
 const columns = [
   { id: "employeeId", label: "Employee ID", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 170 },
-  { id: "annualLeave", label: "Annual Leave", minWidth: 170 },
-  { id: "shortLeave", label: "Short Leave", minWidth: 170 },
+  { id: "employeeName", label: "Employee Name", minWidth: 170 },
+  { id: "date", label: "Date", minWidth: 170 },
+  {
+    id: "status",
+    label: "Status",
+    minWidth: 170,
+    align: "center",
+    format: (value, handleChangeStatus) => (
+      <Switch checked={value} onChange={handleChangeStatus} />
+    ),
+  },
 ];
 
-function createData(employeeId, name, annualLeave, shortLeave) {
-  return { employeeId, name, annualLeave, shortLeave };
+function createData(employeeId, employeeName, date, status) {
+  return { employeeId, employeeName, date, status };
 }
 
 export default function StickyHeadTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
+  const [tableData, setTableData] = useState([
+    createData("EMP001", "John Doe", "2023-01-01", true),
+    createData("EMP002", "Jane Smith", "2023-01-02", false),
+    // Add more rows as needed
+  ]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -141,14 +193,17 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
-  const rows = [
-    createData("EMP001", "John Doe", 20, 5),
-    createData("EMP002", "Jane Smith", 18, 3),
-    // Add more rows as needed
-  ];
+  const handleChangeStatus = (rowIndex) => {
+    const updatedData = [...tableData];
+    updatedData[rowIndex].status = !updatedData[rowIndex].status;
+    setTableData(updatedData);
+  };
 
-  const filteredRows = rows.filter((row) =>
-    row.employeeId.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredRows = tableData.filter(
+    (row) =>
+      row.employeeId.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.employeeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.date.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
@@ -169,7 +224,7 @@ export default function StickyHeadTable() {
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
-                  align="center"
+                  align={column.align || "left"}
                   style={{
                     minWidth: column.minWidth,
                     backgroundColor: "black",
@@ -184,7 +239,7 @@ export default function StickyHeadTable() {
           <TableBody>
             {filteredRows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, rowIndex) => {
                 return (
                   <TableRow
                     hover
@@ -195,8 +250,17 @@ export default function StickyHeadTable() {
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align="center">
-                          {value}
+                        <TableCell
+                          key={column.id}
+                          align={column.align || "left"}
+                        >
+                          {column.format && typeof value === "boolean"
+                            ? column.format(value, () =>
+                                handleChangeStatus(
+                                  rowIndex + page * rowsPerPage
+                                )
+                              )
+                            : value}
                         </TableCell>
                       );
                     })}
