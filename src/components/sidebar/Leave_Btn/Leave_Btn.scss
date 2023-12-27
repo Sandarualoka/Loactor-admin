@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-
   }
   
   .custom-radio {
@@ -28,7 +27,7 @@
     .radio-circle {
       width: 20px;
       height: 20px;
-      border: 2px solid  rgba(53, 15, 245, 0.985);
+      border: 2px solid rgba(53, 15, 245, 0.985);
       border-radius: 50%;
       margin-right: 10px;
       transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;

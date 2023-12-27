@@ -266,7 +266,7 @@ export default function StickyHeadTable() {
 
   const rows = [
     createData("EMP001", "John Doe", 20, 5),
-    createData("EMP002", "Jane Smith", 18, 3),
+
     // Add more rows as needed
   ];
 
