@@ -10,6 +10,7 @@
 // import InputBase from "@mui/material/InputBase";
 // import Switch from "@mui/material/Switch";
 // import SearchIcon from "@mui/icons-material/Search";
+// import Leave_Btn from "../Leave_Btn/Leave_btn";
 
 // const columns = [
 //   { id: "employeeId", label: "Employee ID", minWidth: 170 },
@@ -20,11 +21,8 @@
 //     label: "Status",
 //     minWidth: 170,
 //     align: "center",
-//     format: (value) => (
-//       <Switch
-//         checked={value}
-//         // Handle the switch change here (add a state and update the status accordingly)
-//       />
+//     format: (value, handleChangeStatus) => (
+//       <Switch checked={value} onChange={handleChangeStatus} />
 //     ),
 //   },
 // ];
@@ -37,6 +35,11 @@
 //   const [page, setPage] = useState(0);
 //   const [rowsPerPage, setRowsPerPage] = useState(10);
 //   const [searchTerm, setSearchTerm] = useState("");
+//   const [tableData, setTableData] = useState([
+//     createData("EMP001", "John Doe", "2023-01-01", true),
+//     createData("EMP002", "Jane Smith", "2023-01-02", false),
+//     // Add more rows as needed
+//   ]);
 
 //   const handleChangePage = (event, newPage) => {
 //     setPage(newPage);
@@ -52,13 +55,13 @@
 //     setPage(0);
 //   };
 
-//   const rows = [
-//     createData("EMP001", "John Doe", "2023-01-01", true),
-//     createData("EMP002", "Jane Smith", "2023-01-02", false),
-//     // Add more rows as needed
-//   ];
+//   const handleChangeStatus = (rowIndex) => {
+//     const updatedData = [...tableData];
+//     updatedData[rowIndex].status = !updatedData[rowIndex].status;
+//     setTableData(updatedData);
+//   };
 
-//   const filteredRows = rows.filter(
+//   const filteredRows = tableData.filter(
 //     (row) =>
 //       row.employeeId.toLowerCase().includes(searchTerm.toLowerCase()) ||
 //       row.employeeName.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -98,7 +101,7 @@
 //           <TableBody>
 //             {filteredRows
 //               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-//               .map((row) => {
+//               .map((row, rowIndex) => {
 //                 return (
 //                   <TableRow
 //                     hover
@@ -114,7 +117,11 @@
 //                           align={column.align || "left"}
 //                         >
 //                           {column.format && typeof value === "boolean"
-//                             ? column.format(value)
+//                             ? column.format(value, () =>
+//                                 handleChangeStatus(
+//                                   rowIndex + page * rowsPerPage
+//                                 )
+//                               )
 //                             : value}
 //                         </TableCell>
 //                       );
@@ -137,6 +144,7 @@
 //     </Paper>
 //   );
 // }
+
 import React, { useState } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
@@ -147,8 +155,8 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import InputBase from "@mui/material/InputBase";
-import Switch from "@mui/material/Switch";
 import SearchIcon from "@mui/icons-material/Search";
+import Leave_Btn from "../Leave_Btn/Leave_btn";
 
 const columns = [
   { id: "employeeId", label: "Employee ID", minWidth: 170 },
@@ -159,8 +167,8 @@ const columns = [
     label: "Status",
     minWidth: 170,
     align: "center",
-    format: (value, handleChangeStatus) => (
-      <Switch checked={value} onChange={handleChangeStatus} />
+    format: (value, rowIndex, handleLeaveClick) => (
+      <Leave_Btn status={value} onClick={() => handleLeaveClick(rowIndex)} />
     ),
   },
 ];
@@ -193,7 +201,7 @@ export default function StickyHeadTable() {
     setPage(0);
   };
 
-  const handleChangeStatus = (rowIndex) => {
+  const handleLeaveClick = (rowIndex) => {
     const updatedData = [...tableData];
     updatedData[rowIndex].status = !updatedData[rowIndex].status;
     setTableData(updatedData);
@@ -254,12 +262,8 @@ export default function StickyHeadTable() {
                           key={column.id}
                           align={column.align || "left"}
                         >
-                          {column.format && typeof value === "boolean"
-                            ? column.format(value, () =>
-                                handleChangeStatus(
-                                  rowIndex + page * rowsPerPage
-                                )
-                              )
+                          {column.id === "status"
+                            ? column.format(value, rowIndex, handleLeaveClick)
                             : value}
                         </TableCell>
                       );
