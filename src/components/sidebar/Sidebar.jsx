@@ -9,6 +9,8 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Atdn from "../../assets/atdn.png";
 import WorkOffIcon from "@mui/icons-material/WorkOff";
 import RingVolumeIcon from "@mui/icons-material/RingVolume";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
 const Sidebar = () => {
   const location = useLocation();
 
@@ -89,6 +91,15 @@ const Sidebar = () => {
               <RingVolumeIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
                 Requested Leaves
+              </span>
+            </li>
+          </Link>
+
+          <Link to="/vac_leave" style={{ textDecoration: "none" }}>
+            <li className={location.pathname === "/vac_leave" ? "active" : ""}>
+              <CalendarMonthIcon className="icon" style={{ color: "white" }} />
+              <span style={{ color: "white", marginBottom: "10px" }}>
+                Select Vacation Dates
               </span>
             </li>
           </Link>

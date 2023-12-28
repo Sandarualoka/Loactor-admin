@@ -1,0 +1,38 @@
+.re_leave{
+
+    .vac-cover{
+        text-align: center;
+    }
+    .vac-img{
+        width: 350px;
+        height: 350px;
+        
+    }
+
+    .vac-img {
+        animation: bounce 1s infinite alternate;
+      }
+      
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .header-vacation{
+        text-align: center;
+        color:  rgba(53, 15, 245, 0.985);
+        text-align: center;
+        font-size: 40px;
+        font-weight: 700;
+        font-weight: bold;
+        
+      }
+
+      .calendarVac{
+        text-align: center;
+      }
+}

@@ -6,6 +6,7 @@ import Bulk from './pages/bulk/Bulk';
 import ViewDetails from './pages/viewDetails/ViewDetails';
 import Req_Leave from './pages/req-leave/Req_Leave';
 import Leave from './pages/leave/Leave';
+import VacDate from './pages/vac-date/VacDate';
 
 import {
   BrowserRouter,
@@ -28,6 +29,7 @@ function App() {
            <Route path='/viewDetails' element={<ViewDetails/>} />
            <Route path='/req_leave' element={<Req_Leave/>} />
            <Route path='/leave' element={<Leave/>} />
+           <Route path='/vac_leave' element={<VacDate/>} />
 
 
          </Routes>
