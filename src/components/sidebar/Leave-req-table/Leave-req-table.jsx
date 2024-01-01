@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -15,6 +15,7 @@ const columns = [
   { id: "employeeId", label: "Employee ID", minWidth: 170 },
   { id: "employeeName", label: "Employee Name", minWidth: 170 },
   { id: "date", label: "Date", minWidth: 170 },
+  { id: "leaveType", label: "Leave Type", minWidth: 170 }, // New column
   {
     id: "status",
     label: "Status",
@@ -26,18 +27,42 @@ const columns = [
   },
 ];
 
-function createData(employeeId, employeeName, date, status) {
-  return { employeeId, employeeName, date, status };
+function createData(employeeId, employeeName, date, status, leaveType) {
+  return { employeeId, employeeName, date, status, leaveType };
 }
 
 export default function StickyHeadTable() {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
-  const [tableData, setTableData] = useState([
-    createData("EMP001", "John Doe", "2023-01-01", "Approved"),
-    // Add more rows as needed
-  ]);
+  const [tableData, setTableData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from your backend API here
+    const fetchData = async () => {
+      try {
+        const response = await fetch("your_backend_api_url");
+        const data = await response.json();
+
+        // Assuming your backend returns an array of objects with the required properties
+        const formattedData = data.map((item) =>
+          createData(
+            item.employeeId,
+            item.employeeName,
+            item.date,
+            item.status,
+            item.leaveType
+          )
+        );
+
+        setTableData(formattedData);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []); // Empty dependency array means this effect runs once when the component mounts
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
