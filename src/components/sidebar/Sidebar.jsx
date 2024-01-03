@@ -6,7 +6,6 @@ import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 import PersonIcon from "@mui/icons-material/Person";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import Atdn from "../../assets/atdn.png";
 import WorkOffIcon from "@mui/icons-material/WorkOff";
 import RingVolumeIcon from "@mui/icons-material/RingVolume";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -33,9 +32,6 @@ const Sidebar = () => {
       <hr />
       <div className="center">
         <ul>
-          <p className="title" style={{ color: "white" }}>
-            OPTIONS
-          </p>
           <Link to="/new" style={{ textDecoration: "none" }}>
             <li className={location.pathname === "/new" ? "active" : ""}>
               <PersonIcon className="icon" style={{ color: "white" }} />
@@ -72,7 +68,7 @@ const Sidebar = () => {
             >
               <FilterAltIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
-                View Employee Details
+                Employee Attendance Details
               </span>
             </li>
           </Link>
@@ -81,7 +77,7 @@ const Sidebar = () => {
             <li className={location.pathname === "/leave" ? "active" : ""}>
               <WorkOffIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
-                View Leaves
+                Employee Leave Details
               </span>
             </li>
           </Link>

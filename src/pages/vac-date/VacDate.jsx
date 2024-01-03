@@ -1,10 +1,22 @@
-// // // Your original file
-// // import React from "react";
+// // import React, { useState } from "react";
+// // import Calendar from "react-calendar";
+// // import "react-calendar/dist/Calendar.css";
 // // import "./vacDate.scss";
 // // import Sidebar from "../../components/sidebar/Sidebar";
 // // import VacDateImg from "../../assets/vac-date.jpg";
 
 // // const VacDate = () => {
+// //   const [selectedDates, setSelectedDates] = useState([]);
+
+// //   const handleDateChange = (date) => {
+// //     setSelectedDates(date);
+// //   };
+
+// //   const handleSaveDates = () => {
+// //     console.log("Selected Dates:", selectedDates);
+// //     // Implement your logic to save the dates to the backend here
+// //   };
+
 // //   return (
 // //     <div>
 // //       <div className="re_leave">
@@ -20,8 +32,27 @@
 // //           <h1 className="header-vacation">Select Vacation Dates Here</h1>
 // //         </div>
 
-// //         <div className="calendarVac">
+// //         <div className="calendar-sel">
+// //           <div className="calendarVac">
+// //             <Calendar
+// //               selectRange
+// //               onChange={handleDateChange}
+// //               value={selectedDates}
+// //             />
+// //           </div>
 
+// //           <div className="selected-dates-input">
+// //             <input
+// //               type="text"
+// //               value={
+// //                 selectedDates.length > 0
+// //                   ? selectedDates.map((date) => date.toDateString()).join(", ")
+// //                   : ""
+// //               }
+// //               readOnly
+// //             />
+// //           </div>
+// //           <button onClick={handleSaveDates}>Save</button>
 // //         </div>
 // //       </div>
 // //     </div>
@@ -30,24 +61,28 @@
 
 // // export default VacDate;
 
-// // Your original file
 // import React, { useState } from "react";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
+// import Calendar from "react-calendar";
+// import "react-calendar/dist/Calendar.css";
 // import "./vacDate.scss";
 // import Sidebar from "../../components/sidebar/Sidebar";
 // import VacDateImg from "../../assets/vac-date.jpg";
 
 // const VacDate = () => {
-//   const [selectedDate, setSelectedDate] = useState(null);
+//   const [selectedDates, setSelectedDates] = useState([]);
 
 //   const handleDateChange = (date) => {
-//     setSelectedDate(date);
+//     // Toggle date selection
+//     if (selectedDates.includes(date)) {
+//       setSelectedDates(selectedDates.filter((d) => d !== date));
+//     } else {
+//       setSelectedDates([...selectedDates, date]);
+//     }
 //   };
 
-//   const handleSaveDate = () => {
-//     // Handle saving selected date here
-//     console.log("Selected Date:", selectedDate);
+//   const handleSaveDates = () => {
+//     console.log("Selected Dates:", selectedDates);
+//     // Implement your logic to save the dates to the backend here
 //   };
 
 //   return (
@@ -62,18 +97,27 @@
 //         </div>
 
 //         <div className="vac-heading">
-//           <h1 className="header-vacation">Select Vacation Date Here</h1>
+//           <h1 className="header-vacation">Select Vacation Dates Here</h1>
 //         </div>
 
-//         <div className="calendarVac">
-//           <DatePicker
-//             selected={selectedDate}
-//             onChange={handleDateChange}
-//             inline
-//           />
-//         </div>
+//         <div className="calendar-sel">
+//           <div className="calendarVac">
+//             <Calendar onChange={handleDateChange} value={selectedDates} />
+//           </div>
 
-//         <button onClick={handleSaveDate}>Save</button>
+//           <div className="selected-dates-input">
+//             <input
+//               type="text"
+//               value={
+//                 selectedDates.length > 0
+//                   ? selectedDates.map((date) => date.toDateString()).join(", ")
+//                   : ""
+//               }
+//               readOnly
+//             />
+//           </div>
+//           <button onClick={handleSaveDates}>Save</button>
+//         </div>
 //       </div>
 //     </div>
 //   );
@@ -91,9 +135,12 @@ const VacDate = () => {
   const [selectedDates, setSelectedDates] = useState([]);
 
   const handleDateChange = (date) => {
-    console.log("New Date:", date);
-    console.log("Selected Dates:", selectedDates);
-    // ... rest of the function
+    // Toggle date selection
+    if (selectedDates.includes(date)) {
+      setSelectedDates(selectedDates.filter((d) => d !== date));
+    } else {
+      setSelectedDates([...selectedDates, date]);
+    }
   };
 
   const handleSaveDates = () => {
@@ -116,14 +163,28 @@ const VacDate = () => {
           <h1 className="header-vacation">Select Vacation Dates Here</h1>
         </div>
 
-        <div className="calendarVac">
-          <DatePicker
-            selectedDates={selectedDates}
-            onChange={handleDateChange}
-          />
-        </div>
+        <div className="calendar-sel">
+          <div className="calendarVac">
+            <DatePicker
+              selected={selectedDates}
+              onChange={handleDateChange}
+              inline
+            />
+          </div>
 
-        <button onClick={handleSaveDates}>Save</button>
+          <div className="selected-dates-input">
+            <input
+              type="text"
+              value={
+                selectedDates.length > 0
+                  ? selectedDates.map((date) => date.toDateString()).join(", ")
+                  : ""
+              }
+              readOnly
+            />
+          </div>
+          <button onClick={handleSaveDates}>Save</button>
+        </div>
       </div>
     </div>
   );
