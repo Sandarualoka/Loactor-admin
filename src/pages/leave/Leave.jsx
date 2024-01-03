@@ -16,7 +16,7 @@ const Leave = () => {
           <img src={leave} alt="leave-logo" className="leave-logo" />
         </div>
 
-        <div className="leave-table">
+        <div className="leave-table-container" style={{ marginLeft: "300px" }}>
           <Leave_table />
         </div>
       </div>
