@@ -207,7 +207,7 @@
 //         onRowsPerPageChange={handleChangeRowsPerPage}
 //       />
 //     </Paper>
-//   );
+
 import * as React from "react";
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
@@ -224,6 +224,11 @@ import Paper from "@mui/material/Paper";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
 
 function createData(employeeId, price) {
   return {
@@ -232,12 +237,12 @@ function createData(employeeId, price) {
     history: [
       {
         date: "2020-01-05",
-        customerId: "Annual Leave", // Modified "Leave Type" value
+        customerId: "Annual Leave",
         amount: 3,
       },
       {
         date: "2020-01-02",
-        customerId: "Casual Leave", // Modified "Leave Type" value
+        customerId: "Casual Leave",
         amount: 1,
       },
     ],
@@ -245,8 +250,22 @@ function createData(employeeId, price) {
 }
 
 function Row(props) {
-  const { row } = props;
+  const { row, onDelete } = props;
   const [open, setOpen] = React.useState(false);
+  const [isDialogOpen, setDialogOpen] = React.useState(false);
+
+  const handleDeleteClick = () => {
+    setDialogOpen(true);
+  };
+
+  const handleConfirmDelete = () => {
+    onDelete(row.employeeId);
+    setDialogOpen(false);
+  };
+
+  const handleCancelDelete = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <React.Fragment>
@@ -263,9 +282,8 @@ function Row(props) {
         <TableCell component="th" scope="row">
           {row.employeeId}
         </TableCell>
-        {/* Delete column */}
         <TableCell align="right">
-          <IconButton color="secondary">
+          <IconButton color="secondary" onClick={handleDeleteClick}>
             <DeleteIcon />
           </IconButton>
         </TableCell>
@@ -274,17 +292,25 @@ function Row(props) {
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
-              <Typography variant="h6" gutterBottom component="div">
+              <Typography
+                style={{ fontWeight: "800" }}
+                variant="h6"
+                gutterBottom
+                component="div"
+              >
                 History
               </Typography>
+
               <Table size="small" aria-label="purchases">
                 <TableHead>
-                  <TableRow>
-                    <TableCell>Date</TableCell>
+                  <TableRow style={{ backgroundColor: "#474747" }}>
+                    <TableCell style={{ color: "white" }}>Date</TableCell>
                     {/* Replace "Customer" with "Leave Type" */}
-                    <TableCell>Leave Type</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell align="right">Amount</TableCell>
+                    <TableCell style={{ color: "white" }}>Leave Type</TableCell>
+                    <TableCell style={{ color: "white" }}>Status</TableCell>
+                    <TableCell style={{ color: "white" }} align="right">
+                      Amount
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -302,10 +328,34 @@ function Row(props) {
                   ))}
                 </TableBody>
               </Table>
+              {/* ... (remaining code remains unchanged) ... */}
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={isDialogOpen}
+        onClose={handleCancelDelete}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">Confirm Delete</DialogTitle>
+        <DialogContent>
+          <Typography variant="body1" gutterBottom>
+            Are you sure you want to delete this row?
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleConfirmDelete} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }
@@ -322,34 +372,44 @@ Row.propTypes = {
     employeeId: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
-const rows = [
-  createData("EMP001", 3.99),
-  createData("EMP002", 4.99),
-  createData("EMP003", 3.79),
-  createData("EMP004", 2.5),
-  createData("EMP005", 1.5),
-];
+const CollapsibleTable = () => {
+  const [rows, setRows] = React.useState([
+    createData("EMP001", 3.99),
+    createData("EMP002", 4.99),
+    createData("EMP003", 3.79),
+    createData("EMP004", 2.5),
+    createData("EMP005", 1.5),
+  ]);
 
-export default function CollapsibleTable() {
+  const handleDeleteRow = (employeeId) => {
+    setRows((prevRows) =>
+      prevRows.filter((row) => row.employeeId !== employeeId)
+    );
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
-          <TableRow>
+          <TableRow style={{ backgroundColor: "black" }}>
             <TableCell />
-            <TableCell>Employee ID</TableCell>
-            {/* Delete column heading */}
-            <TableCell align="right">Delete</TableCell>
+            <TableCell style={{ color: "white" }}>Employee ID</TableCell>
+            <TableCell style={{ color: "white" }} align="right">
+              Delete
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.employeeId} row={row} />
+            <Row key={row.employeeId} row={row} onDelete={handleDeleteRow} />
           ))}
         </TableBody>
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default CollapsibleTable;
