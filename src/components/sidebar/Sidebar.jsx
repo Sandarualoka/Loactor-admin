@@ -9,7 +9,7 @@ import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import WorkOffIcon from "@mui/icons-material/WorkOff";
 import RingVolumeIcon from "@mui/icons-material/RingVolume";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-
+import { FcPlus } from "react-icons/fc";
 const Sidebar = () => {
   const location = useLocation();
 
@@ -25,7 +25,10 @@ const Sidebar = () => {
           }}
         >
           <span className="logo" style={{ color: "white" }}>
-            LOCATOR ADMIN
+            HRIS Mark
+            <span>
+              <FcPlus />
+            </span>
           </span>
         </Link>
       </div>
