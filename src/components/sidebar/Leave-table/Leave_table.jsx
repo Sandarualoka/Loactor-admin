@@ -11,17 +11,20 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import DeleteIcon from "@mui/icons-material/Delete";
+import TextField from "@mui/material/TextField";
 import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
+import "./leave_table.scss";
 
 function createData(employeeId, price) {
   return {
@@ -32,23 +35,31 @@ function createData(employeeId, price) {
         date: "2020-01-05",
         customerId: "Annual Leave",
         amount: 3,
+        status: "Approved",
       },
       {
         date: "2020-01-02",
         customerId: "Casual Leave",
         amount: 1,
+        status: "Approved",
       },
     ],
   };
 }
 
 function Row(props) {
-  const { row, onDelete } = props;
+  const { row, onDelete, onEdit } = props;
   const [open, setOpen] = React.useState(false);
   const [isDialogOpen, setDialogOpen] = React.useState(false);
+  const [editedStatus, setEditedStatus] = React.useState("");
 
   const handleDeleteClick = () => {
     setDialogOpen(true);
+  };
+
+  const handleEditClick = () => {
+    setDialogOpen(true);
+    setEditedStatus(row.history[0].status);
   };
 
   const handleConfirmDelete = () => {
@@ -57,6 +68,23 @@ function Row(props) {
   };
 
   const handleCancelDelete = () => {
+    setDialogOpen(false);
+  };
+
+  const handleSaveEdit = () => {
+    // Update the status in the row's history
+    const updatedRow = {
+      ...row,
+      history: [
+        {
+          ...row.history[0],
+          status: editedStatus,
+        },
+      ],
+    };
+
+    // Replace the row with the updated row
+    onEdit(updatedRow);
     setDialogOpen(false);
   };
 
@@ -79,6 +107,9 @@ function Row(props) {
           <IconButton color="secondary" onClick={handleDeleteClick}>
             <DeleteIcon />
           </IconButton>
+          {/* <IconButton color="primary" onClick={handleEditClick}>
+            <EditIcon />
+          </IconButton> */}
         </TableCell>
       </TableRow>
       <TableRow>
@@ -98,11 +129,13 @@ function Row(props) {
                 <TableHead>
                   <TableRow style={{ backgroundColor: "#B2B2B2" }}>
                     <TableCell style={{ color: "white" }}>Date</TableCell>
-                    {/* Replace "Customer" with "Leave Type" */}
                     <TableCell style={{ color: "white" }}>Leave Type</TableCell>
                     <TableCell style={{ color: "white" }}>Status</TableCell>
                     <TableCell style={{ color: "white" }} align="right">
                       Amount
+                    </TableCell>
+                    <TableCell style={{ color: "white" }} align="right">
+                      Edit
                     </TableCell>
                   </TableRow>
                 </TableHead>
@@ -112,41 +145,58 @@ function Row(props) {
                       <TableCell component="th" scope="row">
                         {historyRow.date}
                       </TableCell>
-                      {/* Replace "customerId" with "Leave Type" */}
                       <TableCell>{historyRow.customerId}</TableCell>
-                      {/* Add "Status" column */}
-                      <TableCell>Approved</TableCell>
+                      <TableCell>{historyRow.status}</TableCell>
                       <TableCell align="right">{historyRow.amount}</TableCell>
+                      <TableCell align="right">
+                        <IconButton color="primary" onClick={handleEditClick}>
+                          <EditIcon />
+                        </IconButton>
+                      </TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
               </Table>
-              {/* ... (remaining code remains unchanged) ... */}
             </Box>
           </Collapse>
         </TableCell>
       </TableRow>
 
-      {/* Delete Confirmation Dialog */}
       <Dialog
         open={isDialogOpen}
         onClose={handleCancelDelete}
         aria-labelledby="delete-dialog-title"
         aria-describedby="delete-dialog-description"
       >
-        <DialogTitle id="delete-dialog-title">Confirm Delete</DialogTitle>
+        <DialogTitle id="delete-dialog-title">
+          {editedStatus ? "Edit Status" : "Confirm Delete"}
+        </DialogTitle>
         <DialogContent>
-          <Typography variant="body1" gutterBottom>
-            Are you sure you want to delete this row?
-          </Typography>
+          {editedStatus ? (
+            <TextField
+              label="Status"
+              value={editedStatus}
+              onChange={(e) => setEditedStatus(e.target.value)}
+            />
+          ) : (
+            <Typography variant="body1" gutterBottom>
+              Are you sure you want to delete this row?
+            </Typography>
+          )}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleCancelDelete} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleConfirmDelete} color="primary">
-            Delete
-          </Button>
+          {editedStatus ? (
+            <Button onClick={handleSaveEdit} color="primary">
+              Save
+            </Button>
+          ) : (
+            <Button onClick={handleConfirmDelete} color="primary">
+              Delete
+            </Button>
+          )}
         </DialogActions>
       </Dialog>
     </React.Fragment>
@@ -160,12 +210,14 @@ Row.propTypes = {
         amount: PropTypes.number.isRequired,
         customerId: PropTypes.string.isRequired,
         date: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
       })
     ).isRequired,
     employeeId: PropTypes.string.isRequired,
     price: PropTypes.number.isRequired,
   }).isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 const CollapsibleTable = () => {
@@ -183,24 +235,27 @@ const CollapsibleTable = () => {
     );
   };
 
+  const handleEditRow = (editedRow) => {
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.employeeId === editedRow.employeeId ? editedRow : row
+      )
+    );
+  };
+
   const generatePDF = () => {
     const pdf = new jsPDF();
 
-    // Set up columns for the table
     const columns = ["Employee ID", "Leave Type", "Status", "Amount"];
-
-    // Set up rows for the table
     const rowsData = rows.map((row) => [
       row.employeeId,
       row.history[0].customerId,
-      "Approved", // You can customize the status as needed
+      row.history[0].status,
       row.history[0].amount,
     ]);
 
-    // Add the table to the PDF
     pdf.autoTable({ head: [columns], body: rowsData });
 
-    // Save the PDF
     pdf.save("leave_history_report.pdf");
   };
 
@@ -224,7 +279,12 @@ const CollapsibleTable = () => {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.employeeId} row={row} onDelete={handleDeleteRow} />
+            <Row
+              key={row.employeeId}
+              row={row}
+              onDelete={handleDeleteRow}
+              onEdit={handleEditRow}
+            />
           ))}
         </TableBody>
       </Table>
