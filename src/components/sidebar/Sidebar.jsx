@@ -10,6 +10,7 @@ import WorkOffIcon from "@mui/icons-material/WorkOff";
 import RingVolumeIcon from "@mui/icons-material/RingVolume";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { FcPlus } from "react-icons/fc";
+import SummarizeIcon from "@mui/icons-material/Summarize";
 const Sidebar = () => {
   const location = useLocation();
 
@@ -76,32 +77,43 @@ const Sidebar = () => {
             </li>
           </Link>
 
-          <Link to="/leave" style={{ textDecoration: "none" }}>
+          {/* <Link to="/leave" style={{ textDecoration: "none" }}>
             <li className={location.pathname === "/leave" ? "active" : ""}>
               <WorkOffIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
                 Employee Leave Details
               </span>
             </li>
+          </Link> */}
+
+          <Link to="/sales-report" style={{ textDecoration: "none" }}>
+            <li
+              className={location.pathname === "/sales-report" ? "active" : ""}
+            >
+              <SummarizeIcon className="icon" style={{ color: "white" }} />
+              <span style={{ color: "white", marginBottom: "10px" }}>
+                Sales Report
+              </span>
+            </li>
           </Link>
 
-          <Link to="/req_leave" style={{ textDecoration: "none" }}>
+          {/* <Link to="/req_leave" style={{ textDecoration: "none" }}>
             <li className={location.pathname === "/req_leave" ? "active" : ""}>
               <RingVolumeIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
                 Requested Leaves
               </span>
             </li>
-          </Link>
+          </Link> */}
 
-          <Link to="/vac_leave" style={{ textDecoration: "none" }}>
+          {/* <Link to="/vac_leave" style={{ textDecoration: "none" }}>
             <li className={location.pathname === "/vac_leave" ? "active" : ""}>
               <CalendarMonthIcon className="icon" style={{ color: "white" }} />
               <span style={{ color: "white", marginBottom: "10px" }}>
                 Select Vacation Dates
               </span>
             </li>
-          </Link>
+          </Link> */}
 
           <li>
             <Link

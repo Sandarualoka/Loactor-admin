@@ -1,0 +1,35 @@
+.sales{
+    display: flex;
+    width: 100%;
+    margin: 0;
+
+    .salesContainer{
+        flex: 6;
+
+        .sales-content{
+            text-align: center;
+        }
+
+        img{
+            margin-top: 30px;
+            margin-left: 30px;
+            width: 350px;
+            height: 250px;
+            
+        }
+
+        .sales-logo{
+            animation: bounce 1s infinite alternate;
+          }
+          
+          @keyframes bounce {
+            0% {
+              transform: translateY(0);
+            }
+            100% {
+              transform: translateY(-10px);
+            }
+          }
+        
+    }
+}
